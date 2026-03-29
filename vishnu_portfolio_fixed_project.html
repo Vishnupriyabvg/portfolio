@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vishnu Priya | Java Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0d1b2a; --navy2: #152436; --navy3: #1e3450;
+    --gold: #c9a84c; --gold2: #e8c87a; --cream: #f5f0e8;
+    --white: #ffffff; --text: #1a2a3a; --text2: #4a6278; --text3: #7a96a8;
+    --line: #d4c9b0; --display: 'Playfair Display', serif;
+    --body: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace;
+    --shadow: 0 4px 24px rgba(13,27,42,0.10); --shadow-lg: 0 12px 48px rgba(13,27,42,0.16);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--text); font-family: var(--body); }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 200;
+    background: var(--navy); display: flex; justify-content: space-between; align-items: center;
+    padding: 0 60px; height: 68px; box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .nav-monogram {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-size: 16px; color: var(--navy); font-weight: 700;
+  }
+  .nav-name { font-family: var(--display); font-size: 17px; color: var(--white); font-weight: 600; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65);
+    text-decoration: none; letter-spacing: 0.8px; text-transform: uppercase;
+    transition: color 0.2s; position: relative; padding-bottom: 4px;
+  }
+  .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: var(--gold); transition: width 0.3s; }
+  .nav-links a:hover { color: var(--gold2); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta { padding: 9px 24px; background: var(--gold); color: var(--navy); border: none; border-radius: 3px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--gold2); }
+
+  .hero { min-height: 100vh; background: var(--navy); display: flex; align-items: center; padding: 68px 60px 0; position: relative; overflow: hidden; }
+  .hero-pattern { position: absolute; right: 0; top: 0; bottom: 0; width: 50%; background: linear-gradient(135deg, var(--navy2), var(--navy3)); clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%); }
+  .hero-dots { position: absolute; right: 60px; top: 50%; transform: translateY(-50%); display: grid; grid-template-columns: repeat(8, 1fr); gap: 14px; opacity: 0.12; }
+  .hero-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); }
+  .hero-content { position: relative; z-index: 2; max-width: 600px; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; animation: fadeUp 0.6s ease both; }
+  .hero-line { width: 40px; height: 1.5px; background: var(--gold); }
+  .hero-eyebrow span { font-family: var(--mono); font-size: 12px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; }
+  .hero-name { font-family: var(--display); font-size: clamp(42px, 5.5vw, 72px); color: var(--white); font-weight: 700; line-height: 1.1; margin-bottom: 8px; animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-title { font-size: 18px; color: var(--gold2); font-weight: 300; letter-spacing: 1px; margin-bottom: 28px; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-divider { width: 60px; height: 2px; background: var(--gold); margin-bottom: 28px; animation: fadeUp 0.6s 0.25s ease both; }
+  .hero-bio { font-size: 15.5px; color: rgba(255,255,255,0.65); line-height: 1.8; max-width: 500px; margin-bottom: 40px; animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.6s 0.4s ease both; }
+  .btn-gold { padding: 14px 36px; background: var(--gold); color: var(--navy); border: none; border-radius: 3px; font-size: 13px; font-weight: 600; cursor: pointer; letter-spacing: 0.8px; text-decoration: none; text-transform: uppercase; transition: all 0.2s; display: inline-block; }
+  .btn-gold:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+  .btn-ghost { padding: 13px 36px; background: transparent; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.25); border-radius: 3px; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.8px; text-decoration: none; text-transform: uppercase; display: inline-block; transition: all 0.2s; }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-metrics { position: absolute; bottom: 0; left: 60px; right: 60px; z-index: 2; display: flex; animation: fadeUp 0.6s 0.5s ease both; }
+  .metric { flex: 1; padding: 28px 32px; background: rgba(255,255,255,0.04); border-top: 2px solid transparent; border-right: 1px solid rgba(255,255,255,0.08); transition: all 0.3s; }
+  .metric:last-child { border-right: none; }
+  .metric:hover { background: rgba(201,168,76,0.08); border-top-color: var(--gold); }
+  .metric-num { font-family: var(--display); font-size: 36px; color: var(--gold2); font-weight: 700; line-height: 1; }
+  .metric-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; }
+
+  .section-wrap { padding: 96px 60px; }
+  .section-header { margin-bottom: 60px; }
+  .section-kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .kicker-line { width: 32px; height: 1.5px; background: var(--gold); }
+  .kicker-text { font-family: var(--mono); font-size: 11px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; }
+  .section-heading { font-family: var(--display); font-size: clamp(28px, 3.5vw, 44px); color: var(--text); font-weight: 700; line-height: 1.2; }
+  .section-heading.light { color: var(--white); }
+  .section-sub { font-size: 15px; color: var(--text2); margin-top: 12px; max-width: 500px; line-height: 1.7; }
+  .section-sub.light { color: rgba(255,255,255,0.55); }
+
+  /* ABOUT */
+  .about-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 72px; align-items: start; }
+  .about-text { font-size: 15.5px; color: var(--text2); line-height: 1.85; }
+  .about-text p { margin-bottom: 18px; }
+  .about-text strong { color: var(--text); font-weight: 600; }
+  .about-text em { color: var(--gold); font-style: normal; font-weight: 500; }
+  .about-sidebar { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .sidebar-row { display: flex; padding: 16px 20px; border-bottom: 1px solid var(--line); transition: background 0.2s; }
+  .sidebar-row:last-child { border-bottom: none; }
+  .sidebar-row:hover { background: #faf7f2; }
+  .sidebar-key { width: 110px; font-family: var(--mono); font-size: 11px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; padding-top: 2px; }
+  .sidebar-val { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.5; }
+  .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; margin-right: 7px; animation: pulse 2s infinite; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .skill-card { background: var(--white); border: 1px solid var(--line); border-radius: 4px; padding: 32px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .skill-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--gold); transition: height 0.4s ease; }
+  .skill-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+  .skill-card:hover::before { height: 100%; }
+  .skill-card-icon { font-size: 28px; margin-bottom: 16px; }
+  .skill-card-title { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 18px; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { padding: 5px 14px; border: 1px solid var(--line); border-radius: 20px; font-size: 13px; color: var(--text2); background: var(--cream); transition: all 0.2s; }
+  .skill-card:hover .pill { border-color: rgba(201,168,76,0.4); }
+
+  /* EXPERIENCE */
+  .exp-grid { display: grid; gap: 24px; }
+  .exp-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 36px; position: relative; overflow: hidden; transition: all 0.3s; }
+  .exp-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(201,168,76,0.3); }
+  .exp-card::after { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(180deg, var(--gold), var(--gold2)); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 12px; }
+  .exp-role { font-family: var(--display); font-size: 20px; color: var(--white); font-weight: 700; }
+  .exp-badge { padding: 4px 14px; border-radius: 20px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.5px; flex-shrink: 0; }
+  .badge-full { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: var(--gold); }
+  .badge-intern { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+  .exp-org { font-size: 14px; color: var(--gold2); margin-bottom: 4px; }
+  .exp-period { font-family: var(--mono); font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 24px; letter-spacing: 1px; }
+  .exp-points { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .exp-points li { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.65; padding-left: 20px; position: relative; }
+  .exp-points li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+
+  /* ── PROJECTS (fixed) ── */
+  #projects { background: var(--white); }
+  .work-notice {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: #fffbf0; border: 1px solid rgba(201,168,76,0.35);
+    border-left: 4px solid var(--gold);
+    border-radius: 4px; padding: 18px 22px; margin-bottom: 36px;
+    font-size: 14px; color: var(--text2); line-height: 1.6;
+  }
+  .work-notice-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .work-notice strong { color: var(--text); font-weight: 600; }
+
+  .project-card {
+    border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+    box-shadow: var(--shadow); transition: box-shadow 0.3s;
+  }
+  .project-card:hover { box-shadow: var(--shadow-lg); }
+  .project-header {
+    background: var(--navy); padding: 40px 48px 36px;
+    display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: start;
+  }
+  .proj-tag-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .proj-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 2px;
+  }
+  .tag-employer { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.35); color: var(--gold); }
+  .tag-duration { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); }
+  .project-name { font-family: var(--display); font-size: 30px; color: var(--white); font-weight: 700; margin-bottom: 6px; line-height: 1.2; }
+  .project-sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+  .project-desc-text { font-size: 14.5px; color: rgba(255,255,255,0.6); line-height: 1.75; max-width: 540px; }
+  .project-meta { text-align: right; flex-shrink: 0; }
+  .meta-item { margin-bottom: 16px; }
+  .meta-key { font-family: var(--mono); font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .meta-val { font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 500; }
+  .project-body { padding: 36px 48px; background: var(--white); }
+  .pb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .pb-label { font-family: var(--mono); font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+  .clients-list { display: flex; flex-direction: column; gap: 8px; }
+  .client-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--cream); border: 1px solid var(--line); border-radius: 3px; font-size: 13px; color: var(--text2); font-weight: 500; }
+  .client-row::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .modules-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .mod-tag { padding: 6px 14px; background: var(--cream); border: 1px solid var(--line); border-radius: 3px; font-size: 12px; color: var(--text2); font-weight: 500; transition: all 0.2s; }
+  .mod-tag:hover { border-color: var(--gold); color: var(--text); }
+  .my-contributions { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .contrib-title { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+  .contrib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .contrib-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; background: var(--cream); border: 1px solid var(--line); border-radius: 3px; font-size: 13px; color: var(--text2); line-height: 1.5; transition: all 0.2s; }
+  .contrib-item:hover { border-color: var(--gold); background: #fffbf2; }
+  .contrib-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .tech-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tech-chip { padding: 4px 12px; background: var(--navy); border-radius: 3px; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.65); }
+
+  /* CONTACT */
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .contact-intro-text { font-size: 15.5px; color: var(--text2); line-height: 1.8; margin-bottom: 32px; }
+  .contact-cards { display: flex; flex-direction: column; gap: 12px; }
+  .contact-item { display: flex; align-items: center; gap: 18px; padding: 18px 22px; background: var(--white); border: 1px solid var(--line); border-radius: 4px; text-decoration: none; transition: all 0.25s; }
+  .contact-item:hover { border-color: var(--gold); box-shadow: var(--shadow); transform: translateX(4px); }
+  .contact-icon-box { width: 42px; height: 42px; border-radius: 3px; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .contact-key { font-family: var(--mono); font-size: 10px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; display: block; margin-bottom: 3px; }
+  .contact-val { font-size: 14px; color: var(--text); font-weight: 500; }
+  .contact-form { background: var(--white); border: 1px solid var(--line); border-radius: 4px; padding: 36px; }
+  .form-title { font-family: var(--display); font-size: 20px; color: var(--text); font-weight: 700; margin-bottom: 24px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 12px; color: var(--text2); font-weight: 500; letter-spacing: 0.5px; margin-bottom: 7px; text-transform: uppercase; }
+  .form-group input, .form-group textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 3px; font-family: var(--body); font-size: 14px; color: var(--text); background: var(--cream); transition: border-color 0.2s; outline: none; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); background: var(--white); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-btn { width: 100%; padding: 14px; background: var(--navy); color: var(--white); border: none; border-radius: 3px; font-size: 13px; font-weight: 600; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
+  .form-btn:hover { background: var(--navy3); transform: translateY(-1px); }
+
+  footer { background: var(--navy); padding: 28px 60px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); }
+  .footer-brand { font-family: var(--display); font-size: 16px; color: rgba(255,255,255,0.7); }
+  .footer-copy { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 1px; }
+  .footer-gold { color: var(--gold); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; } .nav-links, .nav-cta { display: none; }
+    .hero, .section-wrap { padding-left: 24px; padding-right: 24px; }
+    .hero-metrics { left: 24px; right: 24px; } .metric { padding: 20px 16px; }
+    .about-layout, .skills-grid, .pb-grid, .contact-layout { grid-template-columns: 1fr; }
+    .project-header { grid-template-columns: 1fr; } .project-meta { text-align: left; }
+    .project-body { padding: 28px 24px; }
+    footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-monogram">VP</div>
+    <div class="nav-name">Vishnu Priya</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-pattern"></div>
+  <div class="hero-dots" id="dots"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="hero-line"></div><span>Java Full Stack Developer</span></div>
+    <h1 class="hero-name">Vishnu Priya<br>Balaveerayagari</h1>
+    <div class="hero-title">Spring Boot · Microservices · React.js</div>
+    <div class="hero-divider"></div>
+    <p class="hero-bio">Results-driven developer with 2.9+ years building enterprise-grade port management systems. Specializing in event-driven architecture, scalable microservices, and intuitive front-end interfaces.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-gold">Get In Touch</a>
+      <a href="#projects" class="btn-ghost">View My Work</a>
+    </div>
+  </div>
+  <div class="hero-metrics">
+    <div class="metric"><div class="metric-num">2.9+</div><div class="metric-label">Years of Experience</div></div>
+    <div class="metric"><div class="metric-num">5</div><div class="metric-label">Major Port Clients</div></div>
+    <div class="metric"><div class="metric-num">6</div><div class="metric-label">Modules Delivered</div></div>
+    <div class="metric"><div class="metric-num">1</div><div class="metric-label">Enterprise Product</div></div>
+  </div>
+</section>
+
+<section id="about" style="background:var(--white);">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-kicker"><div class="kicker-line"></div><span class="kicker-text">Who I Am</span></div>
+      <h2 class="section-heading">About Me</h2>
+    </div>
+    <div class="about-layout reveal">
+      <div class="about-text">
+        <p>I'm <strong>Vishnu Priya Balaveerayagari</strong>, a Java Full Stack Developer based in <em>Chittoor, Andhra Pradesh</em>, with close to 3 years of professional experience building and maintaining enterprise applications.</p>
+        <p>Since June 2023, I have been part of the <strong>Envision Enterprise Solutions</strong> team, working on <em>I Portman</em> — an integrated port management system serving India's largest port authorities including Chennai Port Trust, Mumbai Port Authority, and JSW Port.</p>
+        <p>My strengths lie in <strong>backend engineering with Spring Boot and microservices</strong>, building reliable event-driven pipelines using <em>Apache Kafka</em>, and crafting responsive front-end experiences with <strong>React.js</strong>.</p>
+        <p>I hold a <strong>B.Tech degree from JNTU Ananthapuram (2022)</strong> and am actively seeking new opportunities to contribute and grow.</p>
+      </div>
+      <div class="about-sidebar">
+        <div class="sidebar-row"><div class="sidebar-key">Name</div><div class="sidebar-val">B. Vishnu Priya</div></div>
+        <div class="sidebar-row"><div class="sidebar-key">Location</div><div class="sidebar-val">Chittoor, Andhra Pradesh</div></div>
+        <div class="sidebar-row"><div class="sidebar-key">Email</div><div class="sidebar-val">vishnupriyabvg@gmail.com</div></div>
+        <div class="sidebar-row"><div class="sidebar-key">Phone</div><div class="sidebar-val">+91 8978779437</div></div>
+        <div class="sidebar-row"><div class="sidebar-key">Degree</div><div class="sidebar-val">B.Tech — 2022 (68%)</div></div>
+        <div class="sidebar-row"><div class="sidebar-key">Experience</div><div class="sidebar-val">2.9 Years</div></div>
+        <div class="sidebar-row"><div class="sidebar-key">Status</div><div class="sidebar-val"><span class="status-dot"></span>Open to Opportunities</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--cream);">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-kicker"><div class="kicker-line"></div><span class="kicker-text">Technical Expertise</span></div>
+      <h2 class="section-heading">Core Skills</h2>
+      <p class="section-sub">A focused skill set built through real-world enterprise development.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">⚙️</div>
+        <div class="skill-card-title">Backend Development</div>
+        <div class="skill-pills"><span class="pill">Java 1.8+</span><span class="pill">Spring Boot</span><span class="pill">Spring MVC</span><span class="pill">Hibernate</span><span class="pill">JPA</span><span class="pill">Microservices</span><span class="pill">REST APIs</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🖥️</div>
+        <div class="skill-card-title">Frontend Development</div>
+        <div class="skill-pills"><span class="pill">React.js</span><span class="pill">Vue.js</span><span class="pill">JavaScript</span><span class="pill">HTML5</span><span class="pill">CSS3</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">📨</div>
+        <div class="skill-card-title">Messaging & Event Systems</div>
+        <div class="skill-pills"><span class="pill">Apache Kafka</span><span class="pill">Zookeeper</span><span class="pill">Event-Driven Architecture</span><span class="pill">Async Processing</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🗄️</div>
+        <div class="skill-card-title">Databases & Tools</div>
+        <div class="skill-pills"><span class="pill">MySQL</span><span class="pill">SQL / RDBMS</span><span class="pill">DBeaver</span><span class="pill">Git</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" style="background:var(--navy);">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-kicker"><div class="kicker-line"></div><span class="kicker-text">Career Timeline</span></div>
+      <h2 class="section-heading light">Professional Experience</h2>
+      <p class="section-sub light">Building enterprise solutions since 2023.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div><div class="exp-role">Java Full Stack Developer</div><div class="exp-org">Envision Enterprise Solutions Pvt. Ltd.</div></div>
+          <span class="exp-badge badge-full">Full-Time</span>
+        </div>
+        <div class="exp-period">JUNE 2023 — PRESENT · 2.9 YEARS</div>
+        <ul class="exp-points">
+          <li>Developed RESTful APIs and controller classes using Spring Boot REST Controller across 6 operational modules</li>
+          <li>Integrated Apache Kafka producers and consumers for asynchronous, event-driven data processing between microservices</li>
+          <li>Implemented Zookeeper for Kafka cluster coordination and distributed configuration management</li>
+          <li>Built and enhanced front-end features using React.js, including Vue.js components with directives, filters, and routing</li>
+          <li>Designed controller, service, and DAO layers following clean layered architecture principles</li>
+          <li>Collaborated with product management and team to deliver milestones on schedule</li>
+        </ul>
+      </div>
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div><div class="exp-role">Java Full Stack Developer — Intern</div><div class="exp-org">Envision Enterprise Solutions Pvt. Ltd.</div></div>
+          <span class="exp-badge badge-intern">Internship</span>
+        </div>
+        <div class="exp-period">JUNE 2023 — SEPTEMBER 2023 · 3 MONTHS</div>
+        <ul class="exp-points">
+          <li>Completed onboarding in Java Full Stack development — Spring Boot, React.js, and RESTful API design</li>
+          <li>Analysed the I Portman enterprise codebase and gained familiarity with multi-module system design</li>
+          <li>Contributed to front-end development tasks (HTML, CSS, JavaScript) under senior developer mentorship</li>
+          <li>Learned and applied Kafka producer-consumer patterns for event-driven communication</li>
+          <li>Participated in client requirement analysis and translated specifications into technical deliverables</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS — corrected to "Work I Contributed To" -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-kicker"><div class="kicker-line"></div><span class="kicker-text">Professional Work</span></div>
+      <h2 class="section-heading">Work I Contributed To</h2>
+      <p class="section-sub">Projects I worked on as part of my professional role at Envision Enterprise Solutions.</p>
+    </div>
+
+    <div class="work-notice reveal">
+      <div class="work-notice-icon">ℹ️</div>
+      <div><strong>Professional Project:</strong> I Portman is a proprietary enterprise product owned by Envision Enterprise Solutions Pvt. Ltd. The work showcased below reflects my individual contributions as a team member during my employment.</div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-header">
+        <div>
+          <div class="proj-tag-row">
+            <span class="proj-tag tag-employer">Employer Project · Envision Enterprise Solutions</span>
+            <span class="proj-tag tag-duration">June 2023 – Present</span>
+          </div>
+          <div class="project-name">Integrated Port Management</div>
+          <div class="project-sub">I Portman — Multi-Port, Multi-Cargo Enterprise Platform</div>
+          <p class="project-desc-text">An enterprise-class system supporting end-to-end import/export and logistics operations across major Indian ports. Covers marine and cargo workflows, container and vessel planning, stockyard management, contractor invoicing, and customer billing. Supports mobile, smart card, and barcode operations. Apache Kafka and Zookeeper power event-driven communication between distributed modules.</p>
+        </div>
+        <div class="project-meta">
+          <div class="meta-item"><span class="meta-key">My Role</span><div class="meta-val">Full Stack Developer</div></div>
+          <div class="meta-item"><span class="meta-key">Team Size</span><div class="meta-val">6 Engineers</div></div>
+          <div class="meta-item"><span class="meta-key">Duration</span><div class="meta-val">2.9 Years</div></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="pb-grid">
+          <div>
+            <div class="pb-label">Clients Served</div>
+            <div class="clients-list">
+              <div class="client-row">Chennai Port Trust</div>
+              <div class="client-row">Mumbai Port Authority</div>
+              <div class="client-row">JSW (Jindal South West Port)</div>
+              <div class="client-row">Deendayal Port Authority</div>
+              <div class="client-row">Paradip Port Trust</div>
+            </div>
+          </div>
+          <div>
+            <div class="pb-label">Modules I Worked On</div>
+            <div class="modules-wrap">
+              <span class="mod-tag">Marine Operations</span><span class="mod-tag">Cargo Operations</span>
+              <span class="mod-tag">Container Operations</span><span class="mod-tag">Stockyard Management</span>
+              <span class="mod-tag">Contractor Invoicing</span><span class="mod-tag">Customer Billing</span>
+            </div>
+            <div class="pb-label" style="margin-top:20px;">Technology Stack</div>
+            <div class="tech-row">
+              <span class="tech-chip">Java 1.8</span><span class="tech-chip">Spring Boot</span>
+              <span class="tech-chip">React.js</span><span class="tech-chip">Apache Kafka</span>
+              <span class="tech-chip">Zookeeper</span><span class="tech-chip">MySQL</span>
+              <span class="tech-chip">REST APIs</span><span class="tech-chip">Git</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-contributions">
+          <div class="contrib-title">My Key Contributions</div>
+          <div class="contrib-grid">
+            <div class="contrib-item"><div class="contrib-icon">🔌</div><div>Built & maintained RESTful APIs using Spring Boot REST Controller</div></div>
+            <div class="contrib-item"><div class="contrib-icon">📨</div><div>Integrated Kafka producers & consumers for async microservice messaging</div></div>
+            <div class="contrib-item"><div class="contrib-icon">🖥️</div><div>Developed React.js & Vue.js front-end components and UI features</div></div>
+            <div class="contrib-item"><div class="contrib-icon">🏗️</div><div>Implemented layered architecture — controller, service & DAO layers</div></div>
+            <div class="contrib-item"><div class="contrib-icon">⚙️</div><div>Configured Zookeeper for Kafka cluster coordination</div></div>
+            <div class="contrib-item"><div class="contrib-icon">🔍</div><div>Analysed client requirements and translated them into features</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="background:var(--cream);">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-kicker"><div class="kicker-line"></div><span class="kicker-text">Let's Connect</span></div>
+      <h2 class="section-heading">Get In Touch</h2>
+    </div>
+    <div class="contact-layout reveal">
+      <div>
+        <p class="contact-intro-text">I'm actively looking for new opportunities — full-time roles, freelance engagements, or just a conversation about how I can add value to your team. Feel free to reach out!</p>
+        <div class="contact-cards">
+          <a href="mailto:vishnupriyabvg@gmail.com" class="contact-item">
+            <div class="contact-icon-box">✉️</div>
+            <div><span class="contact-key">Email</span><div class="contact-val">vishnupriyabvg@gmail.com</div></div>
+          </a>
+          <a href="tel:+918978779437" class="contact-item">
+            <div class="contact-icon-box">📱</div>
+            <div><span class="contact-key">Phone</span><div class="contact-val">+91 8978779437</div></div>
+          </a>
+          <a href="https://www.linkedin.com/in/vishnu-priya-balaveerayagari-76a84b190" target="_blank" class="contact-item">
+            <div class="contact-icon-box">💼</div>
+            <div><span class="contact-key">LinkedIn</span><div class="contact-val">vishnu-priya-balaveerayagari</div></div>
+          </a>
+          <div class="contact-item" style="cursor:default;">
+            <div class="contact-icon-box">📍</div>
+            <div><span class="contact-key">Location</span><div class="contact-val">Chittoor, Andhra Pradesh, India</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-title">Send a Message</div>
+        <div class="form-group"><label>Your Name</label><input type="text" placeholder="e.g. Rahul Sharma"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@company.com"/></div>
+        <div class="form-group"><label>Subject</label><input type="text" placeholder="Job Opportunity / Freelance Project"/></div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Tell me about the role or project..."></textarea></div>
+        <button class="form-btn" onclick="this.textContent='Message Sent ✓'; this.style.background='#1a6b3a';">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Vishnu Priya <span class="footer-gold">·</span> Portfolio</div>
+  <div class="footer-copy">© 2025 B. Vishnu Priya · Java Full Stack Developer</div>
+</footer>
+
+<script>
+  const dotsEl = document.getElementById('dots');
+  for(let i=0;i<64;i++){const d=document.createElement('div');d.className='hero-dot';dotsEl.appendChild(d);}
+  const observer = new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*100);});},{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  const sections=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id;});links.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--gold2)':'';});});
+</script>
+</body>
+</html>
